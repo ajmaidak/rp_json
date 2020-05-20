@@ -3,5 +3,11 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in rp_json.gemspec
 gemspec
 
-gem "rake", "~> 12.0"
-gem "minitest", "~> 5.0"
+group :test do
+  gem "rake", "~> 12.0"
+  gem "minitest", "~> 5.0"
+end
+
+group :development do
+  gem 'rubocop-shopify', require: false
+end
