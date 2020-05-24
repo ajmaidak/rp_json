@@ -25,6 +25,18 @@ module RpJson
           next
         end
 
+        json_number, string = lex_number(string)
+        unless json_number.nil?
+          tokens.append(json_number)
+          next
+        end
+
+        json_boolean, string = lex_bool(string)
+        unless json_boolean.nil?
+          tokens.append(json_boolean)
+          next
+        end
+
         c = string[0]
         if JSON_WHITESPACE.include?(c)
           string = string.delete_prefix(c)
@@ -56,6 +68,43 @@ module RpJson
       end
 
       raise("expected end-of-string quote: #{json_string}")
+    end
+
+    def self.lex_number(string)
+      json_number = ''
+      numbers = (0..9).map(&:to_s).append('-', 'e', '.')
+
+      string.each_char do |c|
+        if numbers.include?(c)
+          json_number += c
+        else
+          break
+        end
+      end
+
+      rest = string.delete_prefix(json_number)
+
+      if json_number.empty?
+        return nil, string
+      end
+
+      if json_number.include?('.')
+        return json_number.to_f, rest
+      end
+
+      [json_number.to_i, rest]
+    end
+
+    def self.lex_bool(string)
+      string_len = string.length
+
+      if string_len >= TRUE_LEN && string.start_with?('true')
+        return true, string.delete_prefix('true')
+      elsif string_len >= FALSE_LEN && string.start_with?('false')
+        return false, string.delete_prefix('false')
+      end
+
+      [nil, string]
     end
   end
 end
