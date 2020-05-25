@@ -32,5 +32,9 @@ module RpJson
       assert_equal(['{', 'foo', ':', true, '}'], Lexer.tokens('{"foo":true}'))
       assert_equal(['{', 'foo', ':', false, '}'], Lexer.tokens('{"foo":false}'))
     end
+
+    def test_null
+      assert_equal(['{', 'foo', ':', nil, '}'], Lexer.tokens('{"foo":null}'))
+    end
   end
 end

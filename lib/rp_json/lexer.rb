@@ -37,6 +37,12 @@ module RpJson
           next
         end
 
+        json_null, string = lex_null(string)
+        unless json_null.nil?
+          tokens.append(nil)
+          next
+        end
+
         c = string[0]
         if JSON_WHITESPACE.include?(c)
           string = string.delete_prefix(c)
@@ -102,6 +108,16 @@ module RpJson
         return true, string.delete_prefix('true')
       elsif string_len >= FALSE_LEN && string.start_with?('false')
         return false, string.delete_prefix('false')
+      end
+
+      [nil, string]
+    end
+
+    def self.lex_null(string)
+      string_len = string.length
+
+      if string_len >= NULL_LEN && string.start_with?('null')
+        return true, string.delete_prefix('null')
       end
 
       [nil, string]
