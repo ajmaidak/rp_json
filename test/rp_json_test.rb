@@ -66,4 +66,34 @@ class RpJsonTest < Minitest::Test
     assert_equal(["foobar"], RpJson.parse('["foobar"]'))
     assert_equal([{}], RpJson.parse('[{}]'))
   end
+
+  def test_parse_simple_objects
+    assert_equal({}, RpJson.parse('{}'))
+    assert_equal({}, RpJson.parse(' {   }   '))
+    assert_equal({ "a" => nil }, RpJson.parse('{   "a"   :  null}'))
+    assert_equal({ "a" => nil }, RpJson.parse('{"a":null}'))
+    assert_equal({ "a" => false }, RpJson.parse('{   "a"  :  false  }  '))
+    assert_equal({ "a" => false }, RpJson.parse('{"a":false}'))
+    assert_raises("") { RpJson.parse('{false}') }
+    assert_equal({ "a" => true }, RpJson.parse('{"a":true}'))
+    assert_equal({ "a" => true }, RpJson.parse('  { "a" :  true  }   '))
+    assert_equal({ "a" => -23 }, RpJson.parse('  {  "a"  :  -23  }  '))
+    assert_equal({ "a" => -23 }, RpJson.parse('  { "a" : -23 } '))
+    assert_equal({ "a" => 23 }, RpJson.parse('{"a":23  } '))
+    assert_equal({ "a" => 23 }, RpJson.parse('  { "a"  : 23  } '))
+    assert_equal({ "a" => 0.23 }, RpJson.parse(' { "a"  :  0.23 }  '))
+    assert_equal({ "a" => 0.23 }, RpJson.parse('  {  "a"  :  0.23  }  '))
+  end
+
+  def test_parse_some_strings
+    skip("Doesn't handle string escapes yet")
+    assert_equal([""], RpJson.parse('[""]'))
+    assert_equal(["\\"], RpJson.parse('["\\\\"]'))
+    assert_equal(['"'], RpJson.parse('["\""]'))
+    assert_equal(['\\"\\'], RpJson.parse('["\\\\\\"\\\\"]'))
+    assert_equal(
+      ["\"\b\n\r\t\0\037"],
+      RpJson.parse('["\"\b\n\r\t\u0000\u001f"]')
+    )
+  end
 end
