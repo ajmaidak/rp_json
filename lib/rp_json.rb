@@ -12,10 +12,10 @@ module RpJson
   NULL_LEN = 'null'.length
   JSON_COMMA = ','
   JSON_COLON = ':'
-  JSON_LEFTBRACKET = '['          
-  JSON_RIGHTBRACKET = ']'         
-  JSON_LEFTBRACE = '{'            
-  JSON_RIGHTBRACE = '}'           
+  JSON_LEFTBRACKET = '['
+  JSON_RIGHTBRACKET = ']'
+  JSON_LEFTBRACE = '{'
+  JSON_RIGHTBRACE = '}'
   JSON_SYNTAX = [JSON_COMMA, JSON_COLON, JSON_LEFTBRACKET, JSON_RIGHTBRACKET,
                  JSON_LEFTBRACE, JSON_RIGHTBRACE]
 end
