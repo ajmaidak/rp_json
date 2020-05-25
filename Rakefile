@@ -3,6 +3,7 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
 require 'rubocop/rake_task'
+require 'reek/rake/task'
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
@@ -11,5 +12,9 @@ Rake::TestTask.new(:test) do |t|
 end
 
 RuboCop::RakeTask.new
+
+Reek::Rake::Task.new do |t|
+  t.fail_on_error = false
+end
 
 task(default: [:rubocop, :test])

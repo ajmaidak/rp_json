@@ -12,4 +12,5 @@ end
 
 group :development do
   gem 'rubocop-shopify', require: false
+  gem "reek", require: false
 end

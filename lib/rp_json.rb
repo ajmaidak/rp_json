@@ -18,4 +18,8 @@ module RpJson
   JSON_RIGHTBRACE = '}'
   JSON_SYNTAX = [JSON_COMMA, JSON_COLON, JSON_LEFTBRACKET, JSON_RIGHTBRACKET,
                  JSON_LEFTBRACE, JSON_RIGHTBRACE]
+
+  def self.parse(string)
+    Parser.parse(Lexer.tokens(string)).first
+  end
 end
