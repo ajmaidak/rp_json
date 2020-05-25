@@ -1,8 +1,12 @@
 # RpJson
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rp_json`. To experiment with that code, run `bin/console` for an interactive prompt.
+Ruby Parse JSON
 
-TODO: Delete this and the text above, and describe your gem
+This Gem was created as a educational port of https://github.com/eatonphil/pj to get some basic experience with a 
+lexer parser and keep my ruby fluency up.
+
+Don't use this code for anything...  Use JSON
+
 
 ## Installation
 
@@ -22,7 +26,14 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Its implemented as a simple module function
+
+```ruby
+require 'rp_json'
+
+json_string = '{"foo":"bar"}
+ruby_hash = RpJson.parse(json_string)
+```
 
 ## Development
 
