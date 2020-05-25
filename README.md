@@ -31,7 +31,7 @@ Its implemented as a simple module function
 ```ruby
 require 'rp_json'
 
-json_string = '{"foo":"bar"}
+json_string = '{"foo":"bar"}'
 ruby_hash = RpJson.parse(json_string)
 ```
 
