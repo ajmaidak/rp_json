@@ -4,12 +4,8 @@ module RpJson
   class Parser
     def self.parse_array(tokens)
       json_array = []
-
       t = tokens.first
-
-      if t == JSON_RIGHTBRACKET
-        return [json_array, tokens.drop(1)]
-      end
+      return [json_array, tokens.drop(1)] if t == JSON_RIGHTBRACKET
 
       loop do
         json, tokens = parse(tokens)
@@ -19,9 +15,9 @@ module RpJson
         if t == JSON_RIGHTBRACKET
           return [json_array, tokens.drop(1)]
         elsif t != JSON_COMMA
-          raise 'Expected comma after object in array'
+          raise "expected comma after object in array got #{t}, json_array: #{json_array}"
         else
-          tokens.drop(1)
+          tokens = tokens.drop(1)
         end
       end
 
@@ -34,7 +30,7 @@ module RpJson
       t = tokens.first
 
       if t == JSON_RIGHTBRACE
-        return json_object, tokens.drop(1)
+        return [json_object, tokens.drop(1)]
       end
 
       loop do
@@ -57,7 +53,7 @@ module RpJson
         t = tokens.first
 
         if t == JSON_RIGHTBRACE
-          return json_object, tokens.drop(1)
+          return [json_object, tokens.drop(1)]
         elsif t != JSON_COMMA
           raise 'Expected comma after pair in object, got: #{t}'
         end
